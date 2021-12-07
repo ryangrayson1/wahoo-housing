@@ -1,0 +1,81 @@
+<!--
+    References:
+    Setting custom validation messages: https://stackoverflow.com/questions/5272433/html5-form-required-attribute-set-custom-validation-message
+-->
+{% extends 'housingapp/base_page.html' %}
+
+{%block content %}
+{%if user.is_authenticated %}
+<style>
+    .row {
+        padding-bottom: 16px;
+    }
+    .panel{
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-top:16px;
+    }
+    h5{
+        padding-bottom: 16px;
+    }
+</style>
+<div class="d-flex flex-column justify-content-center panel">
+    <h5>
+        <div class="card border-primary">
+            <div class="card-body">
+                <p class="card-text">
+                    <p class="title">Submit a review for this listing</p>
+                    <p class="small">* = <em>required field</em></p>
+                </p>
+                  
+            </div>
+        </div>
+    </h5>
+    
+    <div class="">
+        {%if user_already_rated %}
+        <div class="d-flex justify-content-center">
+            <p>You already submitted a review for this listing!</p>
+        </div>
+
+        {%else%}
+        <form method="post" action="{% url 'housingapp:RateListing' listing_id=listing_id %}" id="ratingform">
+            {%csrf_token%}
+            <div class="form-group row">
+                <label for="accuracy_rating" class="col col-form-label">Accuracy*</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" min=1 max=5 id="accuracy_rating" name="accuracy_rating"
+                        required oninvalid="this.setCustomValidity('Enter valid whole number rating from 1 to 5')"
+                        oninput="this.setCustomValidity('')" />
+                    <small id="accuracy_helper" class="text-muted col-sm-10"><em>Please rate the accuracy of the listing
+                            from 1 to 5 (5 being the most accurate)</em></small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="listing_rating" class="col col-form-label">Listing*</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" min=1 max=5 id="listing_rating" name="listing_rating"
+                        required oninvalid="this.setCustomValidity('Enter valid whole number rating from 1 to 5')"
+                        oninput="this.setCustomValidity('')" />
+                    <small id="listing_helper" class="text-muted"><em>Please rate the listing itself from 1 to 5 (5
+                            being a great listing)</em></small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="listing_rating" class="col col-form-label">Review*</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" name="review" id="review" required></textarea>
+                    <small id="review_helper" class="text-muted"><em>Please leave a review of the listing</em></small>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-primary w-100" value="Submit review">Submit</button>
+            
+        </form>
+        {%endif%}
+    </div>
+
+</div>
+{%else%}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+{%endblock%}

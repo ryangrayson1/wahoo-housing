@@ -1,0 +1,36 @@
+{% extends 'housingapp/base_page.html' %}
+{%block content %}
+{% if user.is_authenticated %}
+<div class="d-flex justify-content-center align-items-center flex-column">
+    <h1>Welcome, {{user.first_name}}, to your profile</h1>
+    <table class="table">
+        <tr>
+            <td>Name:</td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>
+                <form action="" method="post" id="address_form">
+                    {% csrf_token %}
+                    <input id="address_text" type="text" name="address_text" value="{{ current_address }}" size="50"
+                           maxlength="500"
+                           placeholder="Ex) 1234 McCormick Rd">
+                </form>
+                <div class="flex">
+                    <button type="submit" class="btn btn-outline-primary" form="address_form" value="Submit">
+                        Update address
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{%else%}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+{%endblock%}

@@ -1,0 +1,199 @@
+<!--
+    References:
+    1.
+    Title: How can I round a value in Django Template without using the filter
+    https://stackoverflow.com/questions/18185351/how-can-i-round-a-value-in-django-template-without-using-the-filter
+    2.
+    Title: Bootstrap sizing
+    https://getbootstrap.com/docs/4.0/utilities/sizing/ 
+
+    3.
+    Title: HTML image scaling
+    https://stackoverflow.com/questions/1347675/html-img-scaling
+-->
+
+{% extends 'housingapp/base_page.html' %}
+
+{%block content %}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        word-wrap: break-word;
+        height: 100%;
+    }
+
+    #description {
+        white-space: normal;
+    }
+    li{
+        white-space: normal;
+    }
+</style>
+
+{%if user.is_authenticated%}
+<div class="d-flex justify-content-center align-items-center flex-column">
+    {%if listing%}
+    <div>
+        <div class="d-flex justify-content-center align-items-center">
+            <h2>Listing information</h2>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <table class="w-75 table" style="background-color: aliceblue;">
+                <tr>
+                    <th>
+                        Listing Address
+                    </th>
+                    <td>
+                        {{listing.address}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Contact info
+                    </th>
+                    <td>{{listing.contact_email}}</td>
+                </tr>
+                <tr>
+                    <th>
+                        Bedrooms
+                    </th>
+                    <td>{{listing.rooms}}</td>
+                </tr>
+                <tr>
+                    <th>
+                        Bathrooms
+                    </th>
+                    <td>
+                        {{listing.bathrooms}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Monthly Rent
+                    </th>
+                    <td>${{listing.price}}</td>
+                </tr>
+                <tr>
+                    <th>
+                        Description
+                    </th>
+                    <td id="description">{{listing.description}}</td>
+                </tr>
+                <tr>
+                    <th>Picture</th>
+                    <td>
+                        {% if listing.image %}
+                        <img alt="" height="200em" width="auto" src="{{listing.image.url}}">
+                        {%endif%}
+                    </td>
+                </tr>
+                {% if overall_avg %}
+                <tr>
+                    <th>
+                        Overall Average Rating
+                    </th>
+                    <td>
+                        {% if num_ratings > 1%}
+                        {{overall_avg}}/5 (based on {{num_ratings}} ratings)
+                        {%else%}
+                        {{overall_avg}}/5 (based on {{num_ratings}} rating)
+                        {%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Listing Average Rating
+                    </th>
+                    <td>
+                        {% if num_ratings > 1%}
+                        {{listing_avg}}/5 (based on {{num_ratings}} ratings)
+                        {%else%}
+                        {{listing_avg}}/5 (based on {{num_ratings}} rating)
+                        {%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Listing Accuracy Rating
+                    </th>
+                    <td>
+                        {% if num_ratings > 1%}
+                        {{accuracy_avg}}/5 (based on {{num_ratings}} ratings)
+                        {%else%}
+                        {{accuracy_avg}}/5 (based on {{num_ratings}} rating)
+                        {%endif%}
+                    </td>
+                </tr>
+                {%else%}
+                <tr>
+                    <th>Rating</th>
+                    <td>No ratings yet</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div class="d-flex flex-column align-items-center" style="padding-bottom:10px;">
+            {% if user_already_rated %}
+            <a class="btn btn-primary disabled col-sm-6" aria-disabled="true" href="{% url 'housingapp:RateListing' listing_id=listing_id %}">
+                You already left a review for this listing
+            </a>
+            {%else%}
+            <a class="btn btn-primary col-sm-6" href="{% url 'housingapp:RateListing' listing_id=listing_id %}">Leave a
+                rating for this listing</a>
+            {%endif%}
+        </div>
+
+        {%if ratings%}
+        <div class="d-flex flex-column align-items-center">
+            <h3>Previous reviews and ratings</h3>
+            <table class="w-75 table" style="background-color: aliceblue; margin-left: 20%; margin-right: 20%;">
+                <tr>
+                    <th>
+                        Review
+                    </th>
+                    <th>
+                        Overall Rating
+                    </th>
+                    <th>
+                        Accuracy Rating
+                    </th>
+                    <th>
+                        Listing Rating
+                    </th>
+                </tr>
+                {% for rating in ratings %}
+                <tr>
+                    <td>
+                        "{{rating.review}}" - {{rating.poster_first}}
+                    </td>
+                    <td>
+                        {{rating.overall_rating | floatformat:1}}/5
+                    </td>
+                    <td>
+                        {{rating.accuracy_rating}}/5
+                    </td>
+                    <td>
+                        {{rating.listing_rating}}/5
+                    </td>
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+
+
+        {%endif%}
+    </div>
+    {% else %}
+    <div>No listing selected</div>
+    {%endif%}
+</div>
+{%else%}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+
+{%endblock%}

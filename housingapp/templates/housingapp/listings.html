@@ -1,0 +1,11 @@
+{% extends 'housingapp/base_page.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'housingapp/listings_base.html' %}
+
+{% else %}
+{% include 'housingapp/unauthorized.html' %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!--
+References: 
+    1.
+    Title: Django Newbie Reverse Not Found
+    https://stackoverflow.com/questions/625047/django-newbie-reverse-not-found
+-->
+
+
+{% extends 'housingapp/base_page.html' %}
+{%block content %}
+{% if user.is_authenticated %}
+<style>
+    .row {
+        padding-bottom: 16px;
+    }
+    .panel{
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-top:16px;
+    }
+    h5{
+        padding-bottom: 16px;
+    }
+</style>
+
+<div class="d-flex flex-column justify-content-center panel">
+    <div class="">
+        <h5>
+            <div class="card border-primary">
+                <div class="card-body">
+                    <p class="card-text">
+                    <p class="title">Update your profile address below</p>
+                    <p class="small">* = <em>required field</em></p>
+                    </p>
+                </div>
+            </div>
+        </h5>
+        <form action="{% url 'housingapp:AddressUpdate' %}" method="post" id="address_form">
+            {% csrf_token %}
+            <div>
+                {% for field in form %}
+                <div class="form-group row">
+                    <label for="{{field.name}}" class="col-form-label col">Address*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="{{field.name}}" id="{{field.name}}" required>
+                    </div>
+                </div>
+                {%endfor %}
+                <div class="d-flex flex-column align-items-center">
+                    <input style="margin-top:5px;" type="submit" class="btn btn-primary w-100"
+                        value="Submit" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% else %}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+{%endblock%}

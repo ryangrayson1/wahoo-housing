@@ -1,0 +1,110 @@
+<!--
+    References:
+    1.
+    Title: Django Media URL tag
+    https://stackoverflow.com/questions/35288793/django-media-url-tag
+
+    2.
+    Title: Django imagefield path to static file in django
+    https://stackoverflow.com/questions/34796211/django-imagefield-path-to-static-file-in-django/34808304
+
+    3.
+    Title: Limit characters displayed in span
+    https://stackoverflow.com/questions/33718245/limit-characters-displayed-in-span
+
+    4. 
+    Title: How do I make a table scrollable
+    https://stackoverflow.com/questions/12597897/how-do-i-make-a-table-scrollable
+
+    5. 
+    Title: Table overflowing outside of div
+    https://stackoverflow.com/questions/2259189/table-overflowing-outside-of-div/4470128
+
+    6.
+    Title: HTML image scaling
+    https://stackoverflow.com/questions/1347675/html-img-scaling
+-->
+{% if user.is_authenticated %}
+<style>
+    table {
+        table-layout: fixed;
+        width: 100%;
+        margin-right: 10px;
+        background-color: aliceblue;
+    }
+
+    td {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: 100%;
+    }
+    #description{
+        white-space: nowrap;
+    }
+
+</style>
+
+<div class="d-flex justify-content-center align-items-center flex-column">
+    {% if listings %}
+    <h1>Current Listings</h1>
+    <br>
+        <a class="btn btn-lg btn-primary w-50 col-sm-10 button" href="{% url 'housingapp:AddListing' %}">
+            Add Listing
+        </a>
+    </br>
+        <em>Tip: click on a listing's address for more details!</em>
+    <table class="table" style="table-layout: fixed;">
+        <tr>
+            <th>
+                Listing address
+            </th>
+            <th>
+                Monthly Rent
+            </th>
+            <th>Description</th>
+            <th>
+                Contact info
+            </th>
+            <th>
+                Picture
+            </th>
+        </tr>
+        {%for listing in listings%}
+        <tr>
+            <td>
+                <a href="{% url 'housingapp:ListingID' listing_id=listing.id %}">{{listing.address}}</a>
+            </td>
+            <td>
+                ${{listing.price}}
+            </td>
+            <td id="description">
+                {{listing.description}}
+            </td>
+            <td>
+                <form method="post" action="{% url 'housingapp:Contact' %}" class="inline">
+                    {% csrf_token %}
+                    <button cl type="submit" name="to_email" value="{{ listing.contact_email }}" class="btn btn-primary link-button">
+                        Contact
+                    </button>
+                </form>
+            </td>
+            <td>
+                {% if listing.image %}
+                <img height="100%" width="100%" src="{{ listing.image.url }}" alt="{{ test_model_instance.image.name }}">
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+    </table>
+    {% else %}
+    <h1>No current listings to display</h1>
+    <a class="btn btn-primary col-sm-10 w-50 button" href="{% url 'housingapp:AddListing' %}">
+        Add listing
+    </a>
+	{% endif %}
+</div>
+{% else %}
+<div>
+	<p>Please sign in to view the listings.</p>
+</div>
+{% endif %}

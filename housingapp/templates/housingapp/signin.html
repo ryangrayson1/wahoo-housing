@@ -1,0 +1,24 @@
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{# bootstrap_javascript #}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.css" integrity="sha512-YfFXNd2o6swxA1M0ll6EDdnVdYdE6iz+C6k0Guqf18JW6sVq6Oz9lfbjOso+LMwwNYNxUbp7egkYmC2W/IyeVA==" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.js" integrity="sha512-9fMNGl7JQrJnqWwQ2a4I2xSDXphpn0Mjq0OY1ZMyWwrbYppp2/iybI8beVLvviaxHTcOxewp7bNtt5ou/9tQeA==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.js" integrity="sha512-sN4+2u8s/0hj3R2fFUJoXVpHip6cXX3/d+K2qy0pSu4+Ke2SU8z4wzW1D7uKTYw1EFDFInMfgZbu33BfS+9xmQ==" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="{% static 'wahoohousing/signin.css' %}">
+
+<div class="text-center">
+    <main>
+        <p class="mt-5 mb-3 text-muted">Success sigining in, redirecting to home page</p>
+        <meta http-equiv="refresh" content="5; URL=/" />
+    </main>
+
+</div>

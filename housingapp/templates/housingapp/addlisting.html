@@ -1,0 +1,135 @@
+<!--
+References:
+    1.
+    Title: Is there a float input type in HTML5
+    https://stackoverflow.com/questions/19011861/is-there-a-float-input-type-in-html5
+    2. 
+    Title: How to set HTML5 required attrbitue in JavaScript
+	https://stackoverflow.com/questions/18770369/how-to-set-html5-required-attribute-in-javascript
+    3.
+    Title: How to change mapbox geocoder search bar size
+    https://stackoverflow.com/questions/53232082/how-to-change-mapbox-geocoder-search-bar-size
+    4.
+    Title: Mapbox Documentation
+    https://docs.mapbox.com/ 
+-->
+
+{% extends 'housingapp/base_page.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<style>
+    .panel {
+        margin-top: 16px;
+    }
+
+    .row {
+        padding-bottom: 16px;
+    }
+
+    .mapboxgl-ctrl-geocoder {
+        width: 100%!important;
+        max-width: 100%!important;
+    }
+    h5{
+        padding-bottom: 16px;
+    }
+</style>
+<div class="panel d-flex justify-content-center flex-column" style="margin-left: 25%; margin-right: 25%;">
+    <h5>
+        <div class="card border-primary" style="width: 100%;">
+            <div class="card-body">
+                <p class="card-text">
+                <p class="title">Add your listing using the form below</p>
+                <small class="sm"><em>* = required field</em></small>
+                <br>
+                <small class="sm">Your email will be recorded and posted with your listing for further contact</small>
+                </p>
+            </div>
+        </div>
+    </h5>
+    <div class="">
+
+        <form id="address-form" action="{% url 'housingapp:AddListing' %}" method="post" autocomplete="off"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label class="col full-field">Address*</label>
+                <div id="geocoder" class="col-sm-8"></div>
+                <script
+                    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+                <link
+                    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+                    rel="stylesheet">
+                <script type="text/javascript">
+                    mapboxgl.accessToken = 'pk.eyJ1IjoiYWNoYXJ5YTg4NDgiLCJhIjoiY2t1bHRvdjVpMHdqaDJxbWJjN2FuOGIxeiJ9.HH-8V6z7s0UPMvcKmwhd_g';
+                    const geocoder = new MapboxGeocoder({
+                        accessToken: mapboxgl.accessToken,
+                        types: 'place,address',
+                        placeholder: ' ',
+                    });
+
+                    geocoder.addTo('#geocoder');
+                    var input = document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0];
+                    input.id = "address";
+                    input.name = "address";
+                    input.required = true;
+                </script>
+            </div>
+            <div class="form-group row">
+                <label class="col">Apartment, unit, suite, or floor #</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="address2" name="address2" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="form-label"><b>Housing Details</b></label>
+                <br>
+            </div>
+            <div class="form-group row">
+                <label class="col" for="rooms">Bedrooms*</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="number" id="rooms" name="rooms" min="1" max="20" required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col" for="bathrooms">Bathrooms*</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="number" id="bathrooms" name="bathrooms" min="1" max="20"
+                        required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col" for="price">Monthly Rent ($)*</label>
+                <div class="col-sm-8">
+                    <input id="price" class="form-control" type="number" max="9999.99" step="0.01" name="price"
+                        required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col" for="description">Description of listing*</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" type="text" id="description" name="description" required></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col" for="image">Image of listing*</label>
+                <div class="col-sm-8" style="padding-bottom:10px;">
+                    <input class="" type="file" id="file" name="upload" accept="image/*" required>
+                    <br>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <button type="submit" form="address-form" class="btn btn-primary">
+        Save Listing
+    </button>
+</div>
+{%else%}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+
+{%endblock%}

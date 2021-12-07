@@ -1,0 +1,52 @@
+{% extends 'housingapp/base_page.html' %}
+{%block content %}
+
+<div class="d-flex justify-content-center align-items-center flex-column">
+    <br><h1>Welcome to Wahoo Housing Solutions FAQs!</h1></br>
+</div>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            How can I delete my listing?
+        </h5>
+      </div>
+  
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="background-color: aliceblue;">
+        <div class="card-body">
+           <p>&emsp;To delete a listing, navigate to your Profile by clicking "Profile" at the top of the screen. You can view and delete your listings from your profile page.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+            How do I log out of my account?
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample" style="background-color: aliceblue;">
+        <div class="card-body">
+            <p>&emsp;To log out, click on your name at the top right of the screen and an option to log out will appear.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+            What is the meaning of life?
+        </h5>
+      </div>
+      <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample" style="background-color: aliceblue;">
+        <div class="card-body">
+            <p>&emsp;This is an excellent question. Wahoo Housing Solutions does not claim to know the meaning of life, however we believe that you are living your life meaningfully by using our site!<br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card" style="background-color: aliceblue;">
+    <div class="card-body text-center">
+      <b>For additional questions, please contact us by emailing wahoohousing@gmail.com</b>
+    </div>
+  </div>
+{%endblock%}

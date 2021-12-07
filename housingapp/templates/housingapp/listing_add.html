@@ -1,0 +1,57 @@
+<!--
+    References:
+    Setting custom validation messages: https://stackoverflow.com/questions/5272433/html5-form-required-attribute-set-custom-validation-message
+-->
+{% extends 'housingapp/base_page.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<div>
+    <h1>Add a listing</h1>
+    <form method="post" formmethod="post" action="{% url 'housingapp:AddListing' %}"  id="listing_form">
+        {% csrf_token %}
+        <div class="form-group">
+	        <div id="geocoder"></div>
+				<label for="geocoder">Address:</label>
+		        <input class="form-control" id="geocoder" type="text" name="address" maxlength=400 required
+                oninvalid="this.setCustomValidity('Enter a valid address')"
+                oninput="this.setCustomValidity('')">
+			</div>
+        <div class="form-group">
+            <label for="address2">Address 2:</label>
+        <input class="form-control" id="address2" type="text" name="address2" maxlength=400>
+        </div>
+        <div class="form-group">
+            <label for="locality">City</label>
+        <input class="form-control" id="locality" type="text" name="locality" maxlength=100 required>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+        <input class="form-control" id="state" type="text" name="state" maxlength=100 required>
+        <div class="form-group">
+            <label for="psotcode">Zip code</label>
+        <input class="form-control" id="state" type="text" name="postcode" maxlength=100 required>
+        </div>
+        <div class="form-group">
+            <label for="country">Country/Region</label>
+        <input class="form-control" id="country" type="text" name="state" maxlength=100 required>
+        <div class="form-group">
+            <label for="bathrooms">Bathrooms:</label>
+        <input class="form-control" id="bathrooms" type="number" name="bathrooms" maxlength=400>
+        </div>
+        <div class="form-group">
+            <label for="rooms">Rooms:</label>
+            <input class="form-control" id="rooms" type="number" name="rooms" maxlength=5>
+        </div>
+        <div class="form-group">
+            <label for="description">Description of Listing (amenities/parking/important things to note):</label>
+            <input class="form-control" id="description" type="text"></input>
+        </div>
+        <input style="margin-top:5px;" type="submit" class="btn btn-outline-primary" value="Submit"/>
+    </form>
+
+</div>
+{%else%}
+{% include 'housingapp/unauthorized.html' %}
+{%endif%}
+{%endblock%}

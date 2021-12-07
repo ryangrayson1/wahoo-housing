@@ -1,0 +1,137 @@
+<!--
+	References
+	1.
+	Title: Mapbox Documentation
+	https://docs.mapbox.com/mapbox-gl-js/api/
+	2.
+	Title: Mapbox API
+	https://docs.mapbox.com/
+-->
+
+{% extends 'housingapp/base_page.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if accessToken %}
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+	<link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" rel="stylesheet" type="text/css">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+	<style>
+		body { width: 100%; height: 100%; margin: 0px; padding: 0px; overflow-x: hidden;}
+		#map { position: absolute; top: 75px; bottom: 0px; width: 50%; z-index:0;}
+		.parent-container { width: 100%; padding-top: 60px; }
+		.map-container {width: 50%; float: left; padding-top: 60px;}
+		.sidebar-container {width: 50%; min-height: calc(100vh - 8rem);max-height: calc(100vh - 9rem); float: left; padding-left: 10px; overflow-y: auto;}
+	</style>
+</head>
+<body>
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+	<div class="parent-container">
+		<div class="sidebar-container">
+			<div>
+				{% include 'housingapp/listings_base.html' %}
+			</div>
+		</div>
+		<div class="map-container">
+			<div id='map'/>
+		</div>
+		<script>
+			mapboxgl.accessToken = '{{ accessToken }}';
+			const map = new mapboxgl.Map({
+				container: 'map', // container ID
+				style: 'mapbox://styles/mapbox/streets-v11', // style URL
+				center: [-78.50035489507557, 38.03328350615984], // starting position [lng, lat]
+				zoom: 14 // starting zoom
+			});
+
+			//Marker image
+			var img = new Image(); // Image constructor
+			img.src = "{% static 'housingapp/images/marker.png' %}";
+			img.alt = 'marker';
+
+			// Directions API integration
+			map.addControl(
+				new MapboxDirections({
+					accessToken: mapboxgl.accessToken
+				}),
+				'top-right'
+			);
+			//Map points on-click control
+			map.on('click', 'points', (e) => {
+				if (!e.features.length){
+					return;
+				}
+				// copy coordinates we already have
+				const coordinates = e.features[0].geometry.coordinates.slice();
+				// content of the popup
+				const description = "<H3>"+e.features[0].properties.title+"<H3>";
+
+				// ensure popup is over point
+				while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+					coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+				}
+
+				// set the popup and add to map
+				new mapboxgl.Popup()
+				.setLngLat(coordinates)
+				.setHTML(description)
+				.addTo(map);
+			});
+		</script>
+		{% if points %}
+			<script>
+				map.on('load', () => {
+					// Add an image to use as a custom marker
+					map.addImage('custom-marker', img);
+					// Add a GeoJSON source with the points
+					map.addSource('points', {
+						'type': 'geojson',
+						'data': {
+							'type': 'FeatureCollection',
+							'features': {{ points|safe }}
+						}
+					});
+
+					// Add a symbol layer
+					map.addLayer({
+						'id': 'points',
+						'type': 'symbol',
+						'source': 'points',
+						'layout': {
+							'icon-image': 'custom-marker',
+							// get the title name from the source's "title" property
+							// 'text-field': ['get'],
+							// 'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+							// 'text-offset': [0, 1.25],
+							// 'text-anchor': 'top'
+						}
+					});
+
+					// Change the cursor to a pointer when the mouse is over the places layer.
+					map.on('mouseenter', 'points', () => {
+						map.getCanvas().style.cursor = 'pointer';
+					});
+
+					// Change it back to a pointer when it leaves.
+					map.on('mouseleave', 'points', () => {
+						map.getCanvas().style.cursor = '';
+					});
+				});
+			</script>
+		{% endif %}
+	</div>
+
+</body>
+
+{% else %}
+<p>Access token not found in the passed context. Map cannot be loaded without
+	the API key. Please be advised.</p>
+{% endif %}
+
+{% else %}
+{% include 'housingapp/unauthorized.html' %}
+{% endif %}
+{%endblock%}
