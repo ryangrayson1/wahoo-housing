@@ -136,13 +136,13 @@ elif 'test' in sys.argv or 'Run Tests' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dd8tolj4tokbh6',
-            'USER': 'zuifttdymeidtj',
+            'NAME': 'd9eb02de5sbfaf',
+            'USER': 'cfqmfrnvedrngb',
             'TEST': {
-                'NAME': 'dd8tolj4tokbh6',
+                'NAME': 'd9eb02de5sbfaf',
             },
-            'PASSWORD': '87fa7353b9bb405cc8e0d3f975a9bbc970046b2e760755ba9a5e9a3368c33853',
-            'HOST': 'ec2-35-171-171-27.compute-1.amazonaws.com',
+            'PASSWORD': '1eb2e644aef9a600f6dffc8f4c89e9bedc31524b712e91d55344c783930a095b',
+            'HOST': 'ec2-44-195-186-223.compute-1.amazonaws.com',
             'PORT': '5432',
         }
     }
