@@ -38,7 +38,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'django-insecure-in&*o2ejo$36dwc*t^it_t-8m=*t%cx0_0hr_@w@@z#3v2^=2k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('local_heroku_dev'):
+if os.environ.get('local_dev'):
     DEBUG = True
     DEBUG_PROPAGATE_EXCEPTIONS = True
     
@@ -90,7 +90,7 @@ MIDDLEWARE = [
 ]
 
 #redirect HTTP to HTTPS just for heroku
-if os.environ.get('local_heroku_dev') or 'test' in sys.argv or 'Run Tests' in sys.argv:
+if os.environ.get('local_dev') or 'test' in sys.argv or 'Run Tests' in sys.argv:
     SECURE_SSL_REDIRECT = False
 else:
     SECURE_SSL_REDIRECT = True
@@ -120,7 +120,7 @@ WSGI_APPLICATION = 'wahoohousing.wsgi.application'
 # DATABASES = {}
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
-if os.environ.get('local_heroku_dev'):
+if os.environ.get('local_dev'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -136,13 +136,13 @@ elif 'test' in sys.argv or 'Run Tests' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dd8tolj4tokbh6',
-            'USER': 'zuifttdymeidtj',
+            'NAME': 'd9eb02de5sbfaf',
+            'USER': 'cfqmfrnvedrngb',
             'TEST': {
-                'NAME': 'dd8tolj4tokbh6',
+                'NAME': 'd9eb02de5sbfaf',
             },
-            'PASSWORD': '87fa7353b9bb405cc8e0d3f975a9bbc970046b2e760755ba9a5e9a3368c33853',
-            'HOST': 'ec2-35-171-171-27.compute-1.amazonaws.com',
+            'PASSWORD': '1eb2e644aef9a600f6dffc8f4c89e9bedc31524b712e91d55344c783930a095b',
+            'HOST': 'ec2-44-195-186-223.compute-1.amazonaws.com',
             'PORT': '5432',
         }
     }
@@ -152,10 +152,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'd729u5m08huj8t',
-            'USER': 'uborssprfxkltj',
-            'PASSWORD': '420a7ffbf9b939fa57799c0cfa71ef68d7986cdda9740d0d41bcda050c5ab729',
-            'HOST': 'ec2-44-195-16-34.compute-1.amazonaws.com',
+            'NAME': 'djnqnkhvihl2k',
+            'USER': 'ptykdwogldzqvn',
+            'PASSWORD': '48676b85f1bb74a1e4de9835477d79c042c0c14ca2aabe283d5106ca59b307b3',
+            'HOST': 'ec2-44-199-83-229.compute-1.amazonaws.com',
             'PORT': '5432',
         }
     }
