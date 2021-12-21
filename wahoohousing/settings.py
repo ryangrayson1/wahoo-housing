@@ -49,7 +49,7 @@ else:
 
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoo-housing.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoo-housing.herokuapp.com', 'wahoohousing.herokuapp.com']
 
 # Heroku import
 import django_heroku
