@@ -38,7 +38,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'django-insecure-in&*o2ejo$36dwc*t^it_t-8m=*t%cx0_0hr_@w@@z#3v2^=2k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('local_heroku_dev'):
+if os.environ.get('local_dev'):
     DEBUG = True
     DEBUG_PROPAGATE_EXCEPTIONS = True
     
@@ -90,7 +90,7 @@ MIDDLEWARE = [
 ]
 
 #redirect HTTP to HTTPS just for heroku
-if os.environ.get('local_heroku_dev') or 'test' in sys.argv or 'Run Tests' in sys.argv:
+if os.environ.get('local_dev') or 'test' in sys.argv or 'Run Tests' in sys.argv:
     SECURE_SSL_REDIRECT = False
 else:
     SECURE_SSL_REDIRECT = True
@@ -120,7 +120,7 @@ WSGI_APPLICATION = 'wahoohousing.wsgi.application'
 # DATABASES = {}
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
-if os.environ.get('local_heroku_dev'):
+if os.environ.get('local_dev'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
