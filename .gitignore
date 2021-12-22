@@ -7,7 +7,6 @@
 **/staticfiles/
 db.sqlite3
 media
-**/migrations/
 *.jpeg
 *.jpg
 # config files
