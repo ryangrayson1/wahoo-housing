@@ -131,21 +131,18 @@ if os.environ.get('local_dev'):
             'PORT': '5432',
         }
     }
-#
-# elif 'test' in sys.argv or 'Run Tests' in sys.argv:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'd9eb02de5sbfaf',
-#             'USER': 'cfqmfrnvedrngb',
-#             'TEST': {
-#                 'NAME': 'd9eb02de5sbfaf',
-#             },
-#             'PASSWORD': '1eb2e644aef9a600f6dffc8f4c89e9bedc31524b712e91d55344c783930a095b',
-#             'HOST': 'ec2-44-195-186-223.compute-1.amazonaws.com',
-#             'PORT': '5432',
-#         }
-#     }
+
+elif os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'github_actions',
+           'USER': 'postgres',
+           'PASSWORD': 'postgres',
+           'HOST': '127.0.0.1',
+           'PORT': '5432',
+        }
+    }
 else:
     #DATABASES = {}
     #DATABASES['default'].update(dj_database_url.config(conn_max_age=600))
