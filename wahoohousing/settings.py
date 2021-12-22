@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-in&*o2ejo$36dwc*t^it_t-8m=*t%cx0_0hr_@w@@z#3v2^=2k
 if os.environ.get('local_dev'):
     DEBUG = True
     DEBUG_PROPAGATE_EXCEPTIONS = True
-    
+
 else:
     DEBUG = False
     DEBUG_PROPAGATE_EXCEPTIONS = True
@@ -131,33 +131,26 @@ if os.environ.get('local_dev'):
             'PORT': '5432',
         }
     }
-
-elif 'test' in sys.argv or 'Run Tests' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'd9eb02de5sbfaf',
-            'USER': 'cfqmfrnvedrngb',
-            'TEST': {
-                'NAME': 'd9eb02de5sbfaf',
-            },
-            'PASSWORD': '1eb2e644aef9a600f6dffc8f4c89e9bedc31524b712e91d55344c783930a095b',
-            'HOST': 'ec2-44-195-186-223.compute-1.amazonaws.com',
-            'PORT': '5432',
-        }
-    }
+#
+# elif 'test' in sys.argv or 'Run Tests' in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'd9eb02de5sbfaf',
+#             'USER': 'cfqmfrnvedrngb',
+#             'TEST': {
+#                 'NAME': 'd9eb02de5sbfaf',
+#             },
+#             'PASSWORD': '1eb2e644aef9a600f6dffc8f4c89e9bedc31524b712e91d55344c783930a095b',
+#             'HOST': 'ec2-44-195-186-223.compute-1.amazonaws.com',
+#             'PORT': '5432',
+#         }
+#     }
 else:
     #DATABASES = {}
     #DATABASES['default'].update(dj_database_url.config(conn_max_age=600))
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'djnqnkhvihl2k',
-            'USER': 'ptykdwogldzqvn',
-            'PASSWORD': '48676b85f1bb74a1e4de9835477d79c042c0c14ca2aabe283d5106ca59b307b3',
-            'HOST': 'ec2-44-199-83-229.compute-1.amazonaws.com',
-            'PORT': '5432',
-        }
+        'default': dj_database_url.config(conn_max_age=600)
     }
 
 # import dj_database_url
