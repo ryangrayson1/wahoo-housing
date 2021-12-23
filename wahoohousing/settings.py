@@ -97,9 +97,9 @@ else:
 
     #Cloudinary config
     CLOUDINARY_STORAGE = {
-        'CLOUD_NAME' : "wahoo-housing",
-        'API_SECRET' : "VAQLQcTQeCfDXIEZb8qfpewkB20",
-        'API_KEY' : "319157633385814"
+        'CLOUD_NAME' : "wahoohousing",
+        'API_SECRET' : "amH7fYgndqB-Fz3tl-UX5u3gcBE",
+        'API_KEY' : "385428323422154"
 }
 
 MIDDLEWARE = [
