@@ -18,6 +18,7 @@ jobs:
               POSTGRES_USER: postgres
               POSTGRES_PASSWORD: postgres
               POSTGRES_DB: github_actions
+              super_secret: ${{ secrets.SuperSecret }}
             ports:
               - 5432:5432
 
