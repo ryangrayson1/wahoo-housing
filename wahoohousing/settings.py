@@ -35,7 +35,7 @@ if os.path.isfile(dotenv_file):
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-in&*o2ejo$36dwc*t^it_t-8m=*t%cx0_0hr_@w@@z#3v2^=2k'
+SECRET_KEY = os.environ.get('SECRET_DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('local_dev') or os.environ.get('GITHUB_WORKFLOW'):
@@ -49,7 +49,7 @@ else:
 
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoo-housing.herokuapp.com', 'wahoohousing.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoohousing.herokuapp.com']
 
 # Heroku import
 import django_heroku
@@ -98,8 +98,8 @@ else:
     #Cloudinary config
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME' : "wahoohousing",
-        'API_SECRET' : "amH7fYgndqB-Fz3tl-UX5u3gcBE",
-        'API_KEY' : "385428323422154"
+        'API_SECRET' : os.environ.get('CLOUDINARY_API_SECRET'),
+        'API_KEY' : os.environ.get('CLOUDINARY_API_KEY')
 }
 
 MIDDLEWARE = [
@@ -249,8 +249,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '701216368555-nklj3o5mkd8chcfbs1419a2af3deqim1.apps.googleusercontent.com',
-            'secret': 'aGxJjShliZg2PXtzmaRBA6s3',
+            'client_id': os.environ.get('SOCIAL_API_CLIENTID'),
+            'secret': os.environ.get('SOCIAL_API_SECRET'),
             'key': ''
         },
         'SCOPE': {
@@ -265,7 +265,7 @@ EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'wahoohousing@gmail.com'
 
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": "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",
+    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
 	"IGNORE_RECIPIENT_STATUS": True,
 	"ANYMAIL_IGNORE_UNSUPPORTED_FEATURES": True
 }

@@ -10,7 +10,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     services:
         postgres:
             image: postgres:latest
@@ -27,7 +27,8 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.9]
-
+        
+    environment: wahoohousing
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -39,6 +40,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SECRET_DJANGO_KEY: ${{ secrets.SECRET_DJANGO_KEY }}
+        CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+        SOCIAL_API_CLIENTID: ${{ secrets.SOCIAL_API_CLIENTID }}
+        SOCIAL_API_SECRET: ${{ secrets.SOCIAL_API_SECRET }}
+        SENDINBLUE_API_KEY: ${{ secrets.SENDINBLUE_API_KEY }}
       run: |
         python manage.py makemigrations
         python manage.py migrate
