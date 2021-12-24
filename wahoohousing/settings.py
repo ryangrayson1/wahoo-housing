@@ -58,25 +58,49 @@ import django_heroku
 import dj_database_url
 
 # Application definition
+if os.environ.get('local_dev'):
+    INSTALLED_APPS = [
+        'django.contrib.staticfiles',
+        'housingapp.apps.HousingappConfig',
+        'bootstrap5',
+        'django.contrib.sites',
+        'anymail',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages'
+    ]
+else:
+    INSTALLED_APPS = [
+        'django.contrib.staticfiles',
+        'cloudinary_storage',
+        'cloudinary',
+        'housingapp.apps.HousingappConfig',
+        'bootstrap5',
+        'django.contrib.sites',
+        'anymail',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages'
+    ]
 
-INSTALLED_APPS = [
-    'django.contrib.staticfiles',
-    'cloudinary_storage',
-    'cloudinary',
-    'housingapp.apps.HousingappConfig',
-    'bootstrap5',
-    'django.contrib.sites',
-	'anymail',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages'
-]
+    #Cloudinary config
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME' : "wahoohousing",
+        'API_SECRET' : "amH7fYgndqB-Fz3tl-UX5u3gcBE",
+        'API_KEY' : "385428323422154"
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -238,13 +262,6 @@ SOCIALACCOUNT_PROVIDERS = {
 #Anymail setup
 EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'wahoohousing@gmail.com'
-
-#Cloudinary config
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' : "wahoo-housing",
-    'API_SECRET' : "VAQLQcTQeCfDXIEZb8qfpewkB20",
-	'API_KEY' : "319157633385814"
-}
 
 ANYMAIL = {
     "SENDINBLUE_API_KEY": "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",
