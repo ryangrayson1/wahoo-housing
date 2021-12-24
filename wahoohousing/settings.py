@@ -180,7 +180,8 @@ MEDIA_URL = '/housingapp/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'housingapp/images')
 
 #Cloudinary setup
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+if not os.environ.get('local_dev'):
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # DATABASES['default'].update(dj_database_url.config(conn_max_age=600))
 
