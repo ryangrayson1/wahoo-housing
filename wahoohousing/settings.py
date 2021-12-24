@@ -49,7 +49,7 @@ else:
 
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoo-housing.herokuapp.com', 'wahoohousing.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wahoohousing.herokuapp.com']
 
 # Heroku import
 import django_heroku
@@ -98,8 +98,8 @@ else:
     #Cloudinary config
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME' : "wahoohousing",
-        'API_SECRET' : "amH7fYgndqB-Fz3tl-UX5u3gcBE",
-        'API_KEY' : "385428323422154"
+        'API_SECRET' : os.environ.get('CLOUDINARY_API_SECRET'),
+        'API_KEY' : os.environ.get('CLOUDINARY_API_KEY')
 }
 
 MIDDLEWARE = [
@@ -249,8 +249,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '701216368555-nklj3o5mkd8chcfbs1419a2af3deqim1.apps.googleusercontent.com',
-            'secret': 'aGxJjShliZg2PXtzmaRBA6s3',
+            'client_id': os.environ.get('SOCIAL_API_CLIENTID'),
+            'secret': os.environ.get('SOCIAL_API_SECRET'),
             'key': ''
         },
         'SCOPE': {
@@ -265,7 +265,7 @@ EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'wahoohousing@gmail.com'
 
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": "",
+    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
 	"IGNORE_RECIPIENT_STATUS": True,
 	"ANYMAIL_IGNORE_UNSUPPORTED_FEATURES": True
 }
