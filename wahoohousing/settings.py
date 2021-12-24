@@ -38,7 +38,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'django-insecure-in&*o2ejo$36dwc*t^it_t-8m=*t%cx0_0hr_@w@@z#3v2^=2k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('local_dev'):
+if os.environ.get('local_dev') or os.environ.get('GITHUB_WORKFLOW'):
     DEBUG = True
     DEBUG_PROPAGATE_EXCEPTIONS = True
 
