@@ -21,9 +21,12 @@ from django.contrib import admin
 from housingapp.views import index, signin, FAQ, search, about
 from django.conf import settings #add this
 from django.conf.urls.static import static #add this
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('ricehall/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('housingapp.urls')),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
